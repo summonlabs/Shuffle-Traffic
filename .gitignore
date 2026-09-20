@@ -1,0 +1,43 @@
+# Build trees
+build/
+build-*/
+out/
+install/
+install-*/
+prefix/
+_downstream_build/
+_fresh_clone/
+
+# CMake / IDE
+CMakeUserPresets.json
+.vs/
+.vscode/
+*.user
+*.suo
+compile_commands.json
+
+# Compiled artifacts
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+*.exp
+*.pdb
+*.ilk
+*.idb
+*.map
+
+# Test and tool scratch
+*.log
+*.tmp
+_test_scratch/
+shuffle-state/
+*.journal
+*.snapshot
+
+# Editor / OS
+*.swp
+*~
+Thumbs.db
+Desktop.ini
