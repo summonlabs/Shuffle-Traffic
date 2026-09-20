@@ -141,12 +141,17 @@ Invoke-Checked 'build the downstream consumer' {
 }
 
 Invoke-Checked 'run the downstream consumer' {
-  $demo = Join-Path $downstreamBuild 'shuffle-consumer-demo.exe'
-  if (-not (Test-Path -LiteralPath $demo)) {
-    $demo = Join-Path $downstreamBuild 'shuffle-consumer-demo'
+  # The downstream project chooses its own target name, so the executable is
+  # discovered rather than assumed.
+  $demo = $null
+  foreach ($candidate in Get-ChildItem -LiteralPath $downstreamBuild -Filter '*.exe' -ErrorAction SilentlyContinue) {
+    if ($candidate.Name -match 'consumer|demo') {
+      $demo = $candidate.FullName
+      break
+    }
   }
-  if (-not (Test-Path -LiteralPath $demo)) {
-    throw 'the downstream demo binary was not produced'
+  if ($null -eq $demo) {
+    throw "the downstream demo binary was not produced in $downstreamBuild"
   }
   & $demo
   if ($LASTEXITCODE -ne 0) { throw "the demo exited with $LASTEXITCODE" }
